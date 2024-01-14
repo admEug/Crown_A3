@@ -1,4 +1,5 @@
 ﻿using CQRSTest.Models;
+using CQRSTest.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,14 +12,16 @@ namespace CQRSTest.CQRS.Queries
 
     public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Product>
     {
-        private ProductContext context;
-        public GetProductByIdQueryHandler(ProductContext context)
+        private IRepository<Product> _repo;
+
+        public GetProductByIdQueryHandler(IRepository<Product> repo)
         {
-            this.context = context;
+            _repo = repo;
         }
+
         public async Task<Product> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
         {
-            var product = await context.Product.Where(a => a.Id == query.Id).FirstOrDefaultAsync();
+            var product = await _repo.ReadAsync(query.Id);
             return product;
         }
     }

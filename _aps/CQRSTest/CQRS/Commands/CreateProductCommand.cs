@@ -1,4 +1,5 @@
 ﻿using CQRSTest.Models;
+using CQRSTest.Repository;
 using MediatR;
 
 namespace CQRSTest.CQRS.Commands
@@ -10,20 +11,22 @@ namespace CQRSTest.CQRS.Commands
     }
 
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, int>
-    {
-        private ProductContext context;
-        public CreateProductCommandHandler(ProductContext context)
+    {    
+        private IRepository<Product> _repo;
+
+        public CreateProductCommandHandler(IRepository<Product> repo)
         {
-            this.context = context;
+            _repo = repo;
         }
+
         public async Task<int> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
             var product = new Product();
             product.Name = command.Name;
             product.Price = command.Price;
 
-            context.Product.Add(product);
-            await context.SaveChangesAsync();
+            await _repo.CreateAsync(product);
+       
             return product.Id;
         }
     }

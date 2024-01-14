@@ -1,5 +1,6 @@
 using CQRSTest.Behaviors;
 using CQRSTest.Models;
+using CQRSTest.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -52,6 +53,7 @@ builder.Services.AddSwaggerGen(c =>
                 });
 });
 builder.Services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
 var app = builder.Build();
 

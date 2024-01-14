@@ -1,4 +1,5 @@
 ﻿using CQRSTest.Models;
+using CQRSTest.Repository;
 using MediatR;
 
 namespace CQRSTest.CQRS.Commands
@@ -10,15 +11,17 @@ namespace CQRSTest.CQRS.Commands
         public decimal Price { get; set; }
 
         public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, int>
-        {
-            private ProductContext context;
-            public UpdateProductCommandHandler(ProductContext context)
+        {      
+            private IRepository<Product> _repo;
+
+            public UpdateProductCommandHandler(IRepository<Product> repo)
             {
-                this.context = context;
+                _repo = repo;
             }
+
             public async Task<int> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
             {
-                var product = context.Product.Where(a => a.Id == command.Id).FirstOrDefault();
+                Product product = _repo.ReadAsync(command.Id).Result;                   
 
                 if (product == null)
                 {
@@ -28,7 +31,9 @@ namespace CQRSTest.CQRS.Commands
                 {
                     product.Name = command.Name;
                     product.Price = command.Price;
-                    await context.SaveChangesAsync();
+
+                    await _repo.UpdateAsync(product);
+
                     return product.Id;
                 }
             }

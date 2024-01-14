@@ -1,6 +1,6 @@
 ﻿using CQRSTest.Models;
+using CQRSTest.Repository;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace CQRSTest.CQRS.Commands
 {
@@ -8,18 +8,19 @@ namespace CQRSTest.CQRS.Commands
     {
         public int Id { get; set; }
         public class DeleteProductByIdCommandHandler : IRequestHandler<DeleteProductByIdCommand, int>
-        {
-            private ProductContext context;
-            public DeleteProductByIdCommandHandler(ProductContext context)
+        {     
+            private IRepository<Product> _repo;
+
+            public DeleteProductByIdCommandHandler(IRepository<Product> repo)
             {
-                this.context = context;
+                _repo = repo;
             }
+
             public async Task<int> Handle(DeleteProductByIdCommand command, CancellationToken cancellationToken)
             {
-                var product = await context.Product.Where(a => a.Id == command.Id).FirstOrDefaultAsync();
-                context.Product.Remove(product);
-                await context.SaveChangesAsync();
-                return product.Id;
+                await _repo.DeleteAsync(command.Id);
+
+                return command.Id;          
             }
         }
     }
