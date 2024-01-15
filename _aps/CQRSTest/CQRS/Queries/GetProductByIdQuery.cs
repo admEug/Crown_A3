@@ -1,7 +1,6 @@
 ﻿using CQRSTest.Models;
 using CQRSTest.Repository;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace CQRSTest.CQRS.Queries
 {
