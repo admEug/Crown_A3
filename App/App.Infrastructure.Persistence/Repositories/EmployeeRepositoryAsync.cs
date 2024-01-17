@@ -109,8 +109,6 @@ namespace App.Infrastructure.Persistence.Repositories
             return (shapeData, recordsCount);
         }
 
-
-
         /// <summary>
         /// Filters an IQueryable of employees based on the provided parameters.
         /// </summary>

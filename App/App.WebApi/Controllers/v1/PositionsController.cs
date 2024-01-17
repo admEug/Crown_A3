@@ -3,8 +3,6 @@ using App.Application.Features.Positions.Commands.DeletePositionById;
 using App.Application.Features.Positions.Commands.UpdatePosition;
 using App.Application.Features.Positions.Queries.GetPositionById;
 using App.Application.Features.Positions.Queries.GetPositions;
-using App.WebApi.Extensions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,7 +15,6 @@ namespace App.WebApi.Controllers.v1
     [ApiVersion("1.0")]
     public class PositionsController : BaseApiController
     {
-
         /// <summary>
         /// Gets a list of positions based on the provided filter.
         /// </summary>

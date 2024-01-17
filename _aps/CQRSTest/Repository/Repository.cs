@@ -12,12 +12,12 @@ namespace CQRSTest.Repository
             this.context = context;
         }
 
-        public async Task<List<T>> ReadAllAsync()
+        public async Task<IEnumerable<T>> ReadAllAsync()
         {
             return await context.Set<T>().ToListAsync();
         }
 
-        public async Task<(List<T>, int)> ReadAllFilterAsync(int skip, int take)
+        public async Task<(IEnumerable<T>, int)> ReadAllFilterAsync(int skip, int take)
         {
             var all = context.Set<T>();
             var relevant = await all.Skip(skip).Take(take).ToListAsync();

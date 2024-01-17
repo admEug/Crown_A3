@@ -22,7 +22,8 @@ namespace App.Application.Features.Positions.Commands.CreatePosition
             RuleFor(p => p.PositionTitle)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
-                .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
+                .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.")
+                ;
         }
 
         private async Task<bool> IsUniquePositionNumber(string positionNumber, CancellationToken cancellationToken)

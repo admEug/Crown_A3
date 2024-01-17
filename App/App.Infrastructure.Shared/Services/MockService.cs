@@ -20,8 +20,6 @@ namespace App.Infrastructure.Shared.Services
             return faker.Generate(rowCount);
         }
 
-
-
         /// <summary>
         /// Gets a list of Employees using the EmployeeBogusConfig class.
         /// </summary>
@@ -32,8 +30,6 @@ namespace App.Infrastructure.Shared.Services
             var faker = new EmployeeBogusConfig();
             return faker.Generate(rowCount);
         }
-
-
 
         /// <summary>
         /// Generates a list of seed positions using the PositionSeedBogusConfig class.

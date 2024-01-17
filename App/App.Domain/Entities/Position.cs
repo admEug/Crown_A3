@@ -1,6 +1,4 @@
 ﻿using App.Domain.Common;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace App.Domain.Entities
 {

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -49,9 +50,11 @@ namespace App.Infrastructure.Persistence.Contexts
         {
             // Configure the tables
             modelBuilder.ApplyConfiguration(new PositionConfiguration());
+
             // Mock data
             var _mockData = this.Database.GetService<IMockService>();
-            var seedPositions = _mockData.SeedPositions(1000);
+            List<Position> seedPositions = _mockData.SeedPositions(1000);
+
             modelBuilder.Entity<Position>().HasData(seedPositions);
             base.OnModelCreating(modelBuilder);
         }
@@ -60,6 +63,7 @@ namespace App.Infrastructure.Persistence.Contexts
         {
             optionsBuilder.UseLoggerFactory(_loggerFactory);
         }
+
         internal class PositionConfiguration : IEntityTypeConfiguration<Position>
         {
             public void Configure(EntityTypeBuilder<Position> builder)
